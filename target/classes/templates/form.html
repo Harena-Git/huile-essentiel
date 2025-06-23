@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ajouter un utilisateur</title>
+</head>
+<body>
+    <h1>Ajouter un utilisateur</h1>
+    <form action="/users/save" method="post">
+        Nom: <input type="text" name="nom"/><br/>
+        Email: <input type="text" name="email"/><br/>
+        <button type="submit">Enregistrer</button>
+    </form>
+    <a href="/users/list">Voir la liste</a>
+</body>
+</html>

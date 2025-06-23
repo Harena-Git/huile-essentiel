@@ -1,0 +1,4 @@
+Java : 17 (utilisé dans le pom.xml)
+Spring Boot : 3.2.0
+MySQL : 8.x
+Maven : 3.6 ou supérieur
