@@ -1,6 +1,6 @@
-F:\noah\Documents\mon-projet-springboot\mon-projet-springboot\src\main\java\com\exemple\monprojet\controller\UserController.java
-F:\noah\Documents\mon-projet-springboot\mon-projet-springboot\src\main\java\com\exemple\monprojet\repository\UserRepository.java
-F:\noah\Documents\mon-projet-springboot\mon-projet-springboot\src\main\java\com\exemple\monprojet\MonProjetApplication.java
-F:\noah\Documents\mon-projet-springboot\mon-projet-springboot\src\main\java\com\exemple\monprojet\service\impl\UserServiceImpl.java
-F:\noah\Documents\mon-projet-springboot\mon-projet-springboot\src\main\java\com\exemple\monprojet\model\User.java
-F:\noah\Documents\mon-projet-springboot\mon-projet-springboot\src\main\java\com\exemple\monprojet\service\UserService.java
+F:\gestion-projet\huile-essentiel\src\main\java\com\exemple\monprojet\service\UserService.java
+F:\gestion-projet\huile-essentiel\src\main\java\com\exemple\monprojet\repository\UserRepository.java
+F:\gestion-projet\huile-essentiel\src\main\java\com\exemple\monprojet\MonProjetApplication.java
+F:\gestion-projet\huile-essentiel\src\main\java\com\exemple\monprojet\model\User.java
+F:\gestion-projet\huile-essentiel\src\main\java\com\exemple\monprojet\service\impl\UserServiceImpl.java
+F:\gestion-projet\huile-essentiel\src\main\java\com\exemple\monprojet\controller\UserController.java
