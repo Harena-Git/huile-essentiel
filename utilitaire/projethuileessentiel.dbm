@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+ Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="1.2.0" use-changelog="false" max-obj-count="24"
+	 gen-disabled-objs-code="false" show-sys-schemas-rects="true"
+	 last-position="0,-330" last-zoom="0.75" scene-rect="0,-440,3087.3,1772.12"
+	 default-schema="public" default-owner="postgres"
+	 layers="Default layer"
+	 active-layers="0"
+	 layer-name-colors="#000000"
+	 layer-rect-colors="#b4b4b4"
+	 show-layer-names="false" show-layer-rects="false">
+<database name="projethuileessentiel" is-template="false" allow-conns="true" prepend-at-bod="true">
+	<prepended-sql> <![CDATA[CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
+]]> </prepended-sql>
+</database>
+
+<schema name="public" layers="0" fill-color="#e1e1e1" name-color="#000000" sql-disabled="true">
+</schema>
+
+<table name="personne" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="540" y="20"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="nom">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="prenom">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="date_de_naissance">
+		<type name="date" length="0"/>
+	</column>
+	<column name="email">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="dateAjout">
+		<type name="date" length="0"/>
+	</column>
+	<constraint name="pk_id_personne" type="pk-constr" table="public.personne">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="role" layers="0" collapse-mode="2" max-obj-count="2" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="80" y="180"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="nom">
+		<type name="varchar" length="255"/>
+		<comment> <![CDATA[valeur possible: responsable cueille, responsable production, responsable qualité, gérant]]> </comment>
+	</column>
+	<constraint name="pk_id_role" type="pk-constr" table="public.role">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="utilisateur" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="120" y="-200"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_personne">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="mot_de_passe_hash">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="id_role">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="date_inscription">
+		<type name="date" length="0"/>
+	</column>
+	<constraint name="pk_utilisateur" type="pk-constr" table="public.utilisateur">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="collecteur" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1200" y="500"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_personne">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="date_de_creation">
+		<type name="date" length="0"/>
+	</column>
+	<constraint name="pk_id_collecteur" type="pk-constr" table="public.collecteur">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="zone" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2660" y="260"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="coordonne">
+		<type name="geometry" length="0" spatial-type="GEOMETRY" variation="0" srid="26910"/>
+	</column>
+	<column name="date_de_collecte" not-null="true" default-value="CURRENT_TIMESTAMP">
+		<type name="timestamp with time zone" length="0" with-timezone="true"/>
+	</column>
+	<column name="nom_lieu">
+		<type name="varchar" length="255"/>
+	</column>
+	<constraint name="fk_id_zone" type="pk-constr" table="public.zone">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="phase" layers="0" collapse-mode="2" max-obj-count="2" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="980" y="140"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="nom">
+		<type name="varchar" length="255"/>
+		<comment> <![CDATA[Nom phase (collecte, production, stockage, exportation)]]> </comment>
+	</column>
+	<constraint name="pk_id_phase" type="pk-constr" table="public.phase">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="lot" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2060" y="300"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_zone">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="poids">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="poids_apres_trie">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="id_collecteur">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="montant_payer_collecteur">
+		<type name="decimal" length="0"/>
+	</column>
+	<constraint name="pk_id_lot" type="pk-constr" table="public.lot">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="phase_lot" layers="0" collapse-mode="2" max-obj-count="4" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1440" y="240"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_phase">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_lot">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="date_de_creation" not-null="true" default-value="CURRENT_TIMESTAMP">
+		<type name="timestamp" length="0"/>
+	</column>
+	<constraint name="pk_id_Phase_Lot" type="pk-constr" table="public.phase_lot">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="lot_distillation" layers="0" collapse-mode="2" max-obj-count="8" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2040" y="-100"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_lot">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="temperature_vapeur">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="temperature_condensation">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="date_heure_debut">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="date_heure_fin">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="quantite_eau">
+		<type name="decimal" length="0"/>
+	</column>
+	<constraint name="pk_id_lotDistillation" type="pk-constr" table="public.lot_distillation">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="lot_stockage" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1980" y="-420"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_lot_distillation">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_flacon">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="pk_id_LotStockage" type="pk-constr" table="public.lot_stockage">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="Flacon" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1400" y="-420"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="capacite">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="materiaux">
+		<type name="varchar" length="0"/>
+		<comment> <![CDATA[liste des materiaux espacer par des virgules]]> </comment>
+	</column>
+	<constraint name="pk_id_Flacon" type="pk-constr" table="public.&quot;Flacon&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="analyse" layers="0" collapse-mode="2" max-obj-count="7" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1060" y="-180"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="rentention_time">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="compount">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="ki">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="percent_area">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="formula">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="pk_id_analyse" type="pk-constr" table="public.&quot;analyse&quot;">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="analyse_lot" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1540" y="-120"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_analyse">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_lot_distillation">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="pk_id_Analyse_Lot" type="pk-constr" table="public.analyse_lot">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="type_client" layers="0" collapse-mode="2" max-obj-count="2" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1440" y="760"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="type_client">
+		<type name="varchar" length="255"/>
+		<comment> <![CDATA[choix entre (Particulier ou entreprise)]]> </comment>
+	</column>
+	<constraint name="pk_id_TypeClient" type="pk-constr" table="public.type_client">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="client" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1300" y="1100"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_type_client">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nom">
+		<type name="varchar" length="255"/>
+	</column>
+	<column name="contact">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="pays">
+		<type name="varchar" length="255"/>
+	</column>
+	<constraint name="pk_id_Client" type="pk-constr" table="public.client">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<genericsql name="init_postgis">
+	<definition> <![CDATA[CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
+]]> </definition>
+</genericsql>
+
+<table name="cout_production" layers="0" collapse-mode="2" max-obj-count="9" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="2440" y="660"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_lot">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="cout_kg_feuilles">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="cout_main_oeuvre">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="cout_nettyage">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="cout_transport">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="cout_flacon">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="total">
+		<type name="decimal" length="0"/>
+	</column>
+	<constraint name="pk_cout_production" type="pk-constr" table="public.cout_production">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="vente" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="40" y="440"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="cout_par_litre">
+		<type name="decimal" length="0"/>
+	</column>
+	<column name="marge">
+		<type name="decimal" length="0"/>
+	</column>
+	<constraint name="pk_vente" type="pk-constr" table="public.vente">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="employe" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="440" y="560"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_personne">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="salaire_par_mois">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="pk_employe" type="pk-constr" table="public.employe">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<extension name="postgis" sql-disabled="true">
+	<schema name="public"/>
+	<comment> <![CDATA[PostGIS geometry, geography, and raster spatial types and functions]]> </comment>
+</extension>
+
+<table name="commande" layers="0" collapse-mode="2" max-obj-count="6" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1900" y="1120"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_client">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="date_commande">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="date_prevue_expedition">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="status">
+		<type name="boolean" length="0"/>
+	</column>
+	<constraint name="pk_commande" type="pk-constr" table="public.commande">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="commande_detail" layers="0" collapse-mode="2" max-obj-count="3" z-value="0">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1840" y="780"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="id_commande">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_lot">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="pk_commande_detail" type="pk-constr" table="public.commande_detail">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="fk_id_personne" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.personne" table="public.utilisateur">
+	<columns names="id_personne" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_role_id_role" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.role" table="public.utilisateur">
+	<columns names="id_role" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idPersonne" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.personne" table="public.collecteur">
+	<columns names="id_personne" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idCollecteur_lot" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.collecteur" table="public.lot">
+	<columns names="id_collecteur" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idZone_lot" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.zone" table="public.lot">
+	<columns names="id_zone" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idPhase_Phase_Lot" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.phase" table="public.phase_lot">
+	<columns names="id_phase" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idLot_Phase_Lot" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.lot" table="public.phase_lot">
+	<columns names="id_lot" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idLot_LotDistillation" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.lot" table="public.lot_distillation">
+	<columns names="id_lot" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idLotDistillation_LotStockage" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.lot_distillation" table="public.lot_stockage">
+	<columns names="id_lot_distillation" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idFlacon_LotDistillation" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;Flacon&quot;" table="public.lot_stockage">
+	<columns names="id_flacon" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idAnalyse_Analyse_Lot" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.&quot;analyse&quot;" table="public.analyse_lot">
+	<columns names="id_analyse" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idLotDistillation_Analyse_Lot" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.lot_distillation" table="public.analyse_lot">
+	<columns names="id_lot_distillation" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_idTypeClient_Client" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.type_client" table="public.client">
+	<columns names="id_type_client" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_lot_id_lot" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.lot" table="public.cout_production">
+	<columns names="id_lot" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_personne_id_personne" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.personne" table="public.employe">
+	<columns names="id_personne" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_client_id_client" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.client" table="public.commande">
+	<columns names="id_client" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_lot_id_lot" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.lot" table="public.commande_detail">
+	<columns names="id_lot" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_commande_id_commande" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.commande" table="public.commande_detail">
+	<columns names="id_commande" ref-type="src-columns"/>
+	<columns names="id" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="&quot;rel_Utilisateur_Personne&quot;" type="relfk" layers="0"
+	 src-table="public.utilisateur"
+	 dst-table="public.personne" reference-fk="fk_id_personne"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Utilisateur_Role&quot;" type="relfk" layers="0"
+	 src-table="public.utilisateur"
+	 dst-table="public.role" reference-fk="fk_role_id_role"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Collecteur_Personne&quot;" type="relfk" layers="0"
+	 src-table="public.collecteur"
+	 dst-table="public.personne" reference-fk="fk_idPersonne"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Lot_Collecteur&quot;" type="relfk" layers="0"
+	 src-table="public.lot"
+	 dst-table="public.collecteur" reference-fk="fk_idCollecteur_lot"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Lot_zone&quot;" type="relfk" layers="0"
+	 src-table="public.lot"
+	 dst-table="public.zone" reference-fk="fk_idZone_lot"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Phase_Lot_Phase&quot;" type="relfk" layers="0"
+	 src-table="public.phase_lot"
+	 dst-table="public.phase" reference-fk="fk_idPhase_Phase_Lot"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_LotDistillation_Lot&quot;" type="relfk" layers="0"
+	 src-table="public.lot_distillation"
+	 dst-table="public.lot" reference-fk="fk_idLot_LotDistillation"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Phase_Lot_Lot&quot;" type="relfk" layers="0"
+	 src-table="public.phase_lot"
+	 dst-table="public.lot" reference-fk="fk_idLot_Phase_Lot"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_LotStockage_LotDistillation&quot;" type="relfk" layers="0"
+	 src-table="public.lot_stockage"
+	 dst-table="public.lot_distillation" reference-fk="fk_idLotDistillation_LotStockage"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Analyse_Lot_Analyse&quot;" type="relfk" layers="0"
+	 src-table="public.analyse_lot"
+	 dst-table="public.&quot;analyse&quot;" reference-fk="fk_idAnalyse_Analyse_Lot"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Analyse_Lot_LotDistillation&quot;" type="relfk" layers="0"
+	 src-table="public.analyse_lot"
+	 dst-table="public.lot_distillation" reference-fk="fk_idLotDistillation_Analyse_Lot"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_LotStockage_Flacon&quot;" type="relfk" layers="0"
+	 src-table="public.lot_stockage"
+	 dst-table="public.&quot;Flacon&quot;" reference-fk="fk_idFlacon_LotDistillation"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_Client_TypeClient&quot;" type="relfk" layers="0"
+	 src-table="public.client"
+	 dst-table="public.type_client" reference-fk="fk_idTypeClient_Client"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_employe_Personne&quot;" type="relfk" layers="0"
+	 src-table="public.employe"
+	 dst-table="public.personne" reference-fk="fk_personne_id_personne"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_commande_Client&quot;" type="relfk" layers="0"
+	 src-table="public.commande"
+	 dst-table="public.client" reference-fk="fk_client_id_client"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_commande_detail_Lot&quot;" type="relfk" layers="0"
+	 src-table="public.commande_detail"
+	 dst-table="public.lot" reference-fk="fk_lot_id_lot"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_commande_detail_commande" type="relfk" layers="0"
+	 src-table="public.commande_detail"
+	 dst-table="public.commande" reference-fk="fk_commande_id_commande"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="&quot;rel_cout_production_Lot&quot;" type="relfk" layers="0"
+	 src-table="public.cout_production"
+	 dst-table="public.lot" reference-fk="fk_lot_id_lot"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
