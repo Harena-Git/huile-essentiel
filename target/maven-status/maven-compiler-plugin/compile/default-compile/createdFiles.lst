@@ -1,6 +1,0 @@
-com\exemple\monprojet\service\impl\UserServiceImpl.class
-com\exemple\monprojet\service\UserService.class
-com\exemple\monprojet\MonProjetApplication.class
-com\exemple\monprojet\controller\UserController.class
-com\exemple\monprojet\model\User.class
-com\exemple\monprojet\repository\UserRepository.class
