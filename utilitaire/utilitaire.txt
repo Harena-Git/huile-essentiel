@@ -1,0 +1,16 @@
+# 1. Se placer sur la branche principale (celle qui servira de base)
+git checkout feat/login-role
+
+# 3. Travailler, puis faire des commits
+git add .
+git commit -m "Ajout de l'interface UI de login"
+
+# 4. Pousser vers GitHub
+git push -u origin feat/login-role-ui
+
+#### utilisation avec sous-branche
+# Se replacer sur la branche parent
+git checkout feat/login-role
+
+# Fusionner la branche enfant
+git merge feat/login-role-ui
